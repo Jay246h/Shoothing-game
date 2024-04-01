@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
 
     public GameObject bullotObjA;
     public GameObject bullotObjB;
+    public GameManager manager;
 
 
     Animator anim;
@@ -116,6 +117,11 @@ public class Player : MonoBehaviour
                     break;
             }
                
+        }
+        else if(collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
+        {
+            manager.RespawnPlayer();
+            gameObject.SetActive(false);
         }
     }
     void OnTriggerExit2D(Collider2D collision)
