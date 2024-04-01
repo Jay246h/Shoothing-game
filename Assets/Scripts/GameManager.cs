@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public float maxSpawnDelay;
     public float curSpawnDelay;
 
+    public GameObject player;
+
     void Update()
     {
         curSpawnDelay += Time.deltaTime;
@@ -31,7 +33,7 @@ public class GameManager : MonoBehaviour
                     SpawnPoints[ranPoint].rotation);
         Rigidbody2D rigid = enemy.GetComponent<Rigidbody2D>();
         Enemy enemyLogic = enemy.GetComponent<Enemy>();
-
+        enemyLogic.player = player;
         if (ranPoint == 5 || ranPoint ==6)
         {
             enemy.transform.Rotate(Vector3.back * 90);
