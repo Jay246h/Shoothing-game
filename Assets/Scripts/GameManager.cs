@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +13,9 @@ public class GameManager : MonoBehaviour
     public float curSpawnDelay;
 
     public GameObject player;
+    public Text scoreText;
+    public Image[] lifeImage;
+    public GameObject GameOverSet;
 
     void Update()
     {
@@ -22,6 +27,8 @@ public class GameManager : MonoBehaviour
             maxSpawnDelay = Random.Range(0.5f, 3.0f);
             curSpawnDelay = 0;
         }
+        Player playerLogic = player.GetComponent<Player>();
+        scoreText.text = string.Format("{0:n0}", playerLogic.score);
     }
 
     void SpawnEnemy()
@@ -50,7 +57,17 @@ public class GameManager : MonoBehaviour
             rigid.velocity = new Vector2(0, enemyLogic.speed *(-1));
         }
     }
-
+    public void UpdateLifeIcon(int life)
+    {
+        for(int index = 0; index < 3; index++)
+        {
+            lifeImage[index].color = new Color(1, 1, 1, 0);
+        }
+        for(int index = 0; index < life; index++)
+        {
+            lifeImage[index].color = new Color(1, 1, 1, 1);
+        }
+    }
     public void RespawnPlayer()
     {
         Invoke("RespawnPlayerExe", 2f);
@@ -59,5 +76,17 @@ public class GameManager : MonoBehaviour
     {
         player.transform.position = Vector3.down * 3.5f;
         player.SetActive(true);
+
+        Player playerLogic = player.GetComponent<Player>();
+        playerLogic.isHit = false;
     }
+    public void gameOver()
+    {
+        GameOverSet.SetActive(true);
+    }
+    public void GameRetry()
+    {
+        SceneManager.LoadScene("SampleScene");
+    }
+
 }

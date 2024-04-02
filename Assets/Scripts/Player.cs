@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public bool isTouchBottom;
     public bool isTouchLeft;
     public bool isTouchRight;
+    public bool isHit;
 
     public GameObject bullotObjA;
     public GameObject bullotObjB;
@@ -122,8 +123,22 @@ public class Player : MonoBehaviour
         }
         else if(collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
         {
-            manager.RespawnPlayer();
+            if (isHit)
+                return;
+            isHit = true;
+            life--;
+            manager.UpdateLifeIcon(life);
+            if(life == 0)
+            {
+                manager.gameOver();
+            }
+            else
+            {
+                manager.RespawnPlayer();
+            }
+            
             gameObject.SetActive(false);
+            Destroy(collision.gameObject);
         }
     }
     void OnTriggerExit2D(Collider2D collision)
