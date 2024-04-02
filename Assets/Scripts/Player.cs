@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public int score;
+    public int life;
     public float speed;
     public float power;
     public float bulletspeed;

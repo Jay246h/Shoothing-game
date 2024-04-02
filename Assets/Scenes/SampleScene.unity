@@ -344,6 +344,7 @@ MonoBehaviour:
   - {fileID: 510265202}
   maxSpawnDelay: 0
   curSpawnDelay: 0
+  player: {fileID: 1370460334}
 --- !u!4 &311366311
 Transform:
   m_ObjectHideFlags: 0
@@ -1000,6 +1001,7 @@ MonoBehaviour:
   isTouchRight: 0
   bullotObjA: {fileID: 4717257327757795826, guid: ba61c7469c3497142b0d8bdf698ab544, type: 3}
   bullotObjB: {fileID: 5260543597319330331, guid: 9b07eeb29737bac4ca6e3cb983466cbc, type: 3}
+  manager: {fileID: 311366310}
 --- !u!212 &1370460336
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1061,7 +1063,7 @@ Transform:
   m_GameObject: {fileID: 1370460334}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.02, y: -3.57, z: 0}
+  m_LocalPosition: {x: 0, y: -3.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
