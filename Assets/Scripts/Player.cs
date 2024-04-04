@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     public float speed;
     public int power;
     public int maxpower;
+    public int boom;
+    public int maxboom;
     public float bulletspeed;
     public float maxShotDelay;
     public float curShotDelay;
@@ -18,6 +20,7 @@ public class Player : MonoBehaviour
     public bool isTouchLeft;
     public bool isTouchRight;
     public bool isHit;
+    public bool isBoomTime;
 
     public GameObject bullotObjA;
     public GameObject bullotObjB;
@@ -35,6 +38,7 @@ public class Player : MonoBehaviour
     {
         move();
         fire();
+        Boom();
         Reload();
     }
     void move()
@@ -96,6 +100,36 @@ public class Player : MonoBehaviour
 
 
         curShotDelay = 0;
+    }
+    void Boom()
+    {
+        if (!Input.GetButton("Fire2"))
+            return;
+        
+        if (isBoomTime)
+            return;
+       
+        if (boom == 0)
+            return;
+
+        boom--;
+        isBoomTime = true;
+        boomEffect.SetActive(true);
+        manager.UpdateBoomIcon(boom);
+        Invoke("OffBoomEffect", 4f);
+
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        for (int index = 0; index < enemies.Length; index++)
+        {
+            Enemy enemyLogic = enemies[index].GetComponent<Enemy>();
+            enemyLogic.OnHit(1000);
+        }
+        GameObject[] bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
+        for (int index = 0; index < bullets.Length; index++)
+        {
+            Destroy(bullets[index]);
+        }
+        
     }
     void Reload()
     {
@@ -163,19 +197,14 @@ public class Player : MonoBehaviour
                     }
                     break;
                case "Boom":
-                    boomEffect.SetActive(true);
-                    Invoke("OffBoomEffect", 4f);
-
-                    GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-                    for(int index = 0; index < enemies.Length; index++)
+                    if (boom == maxboom)
                     {
-                        Enemy enemyLogic = enemies[index].GetComponent<Enemy>();
-                        enemyLogic.OnHit(1000);
+                        score += 500;
                     }
-                    GameObject[] bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
-                    for (int index = 0; index < bullets.Length; index++)
+                    else
                     {
-                        Destroy(bullets[index]);
+                        boom++;
+                        manager.UpdateBoomIcon(boom);
                     }
                     break;
             }
@@ -185,6 +214,7 @@ public class Player : MonoBehaviour
     void OffBoomEffect()
     {
         boomEffect.SetActive(false);
+        isBoomTime = false;
     }
     void OnTriggerExit2D(Collider2D collision)
     {
