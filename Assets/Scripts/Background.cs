@@ -17,11 +17,21 @@ public class Background : MonoBehaviour
     }
     void Update()
     {
+        Move();
+        Scrolling();
+        
+      
+    }
+    void Move()
+    {
         Vector3 curpos = transform.position;
         Vector3 nextpos = Vector3.down * speed * Time.deltaTime;
         transform.position = curpos + nextpos;
 
-        if(sprites[endIndex].position.y < viewHeight*(-1))
+    }
+    void Scrolling()
+    {
+        if (sprites[endIndex].position.y < viewHeight * (-1))
         {
             Vector3 backSpritePos = sprites[startIndex].localPosition;
             Vector3 frontSpritePos = sprites[endIndex].localPosition;
@@ -29,7 +39,7 @@ public class Background : MonoBehaviour
 
             int startIndexSave = startIndex;
             startIndex = endIndex;
-            endIndex = startIndexSave-1 == -1 ? sprites.Length-1 : startIndexSave - 1;
+            endIndex = startIndexSave - 1 == -1 ? sprites.Length - 1 : startIndexSave - 1;
         }
     }
 }
