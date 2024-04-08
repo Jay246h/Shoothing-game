@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
     }
     void move()
     {
-       float h = Input.GetAxisRaw("Horizontal");
+        float h = Input.GetAxisRaw("Horizontal");
         if ((isTouchRight && h == 1) || (isTouchLeft && h == -1))
             h = 0;
         float v = Input.GetAxisRaw("Vertical");
@@ -54,7 +54,8 @@ public class Player : MonoBehaviour
 
         transform.position = curPos + nextPos;
 
-        if (Input.GetButtonDown("Horizontal") || (Input.GetButtonUp("Horizontal"))){
+        if (Input.GetButtonDown("Horizontal") || (Input.GetButtonUp("Horizontal")))
+        {
             anim.SetInteger("Input", (int)h);
         }
     }
@@ -64,20 +65,20 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        if(curShotDelay < maxShotDelay)
+        if (curShotDelay < maxShotDelay)
         {
             return;
         }
         switch (power)
         {
-            case 1: //1¹ß
+            case 1: //1ï¿½ï¿½
                 GameObject bullet = Instantiate(bullotObjA, transform.position, transform.rotation);
                 Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
-                rigid.AddForce(Vector2.up*bulletspeed,ForceMode2D.Impulse);
+                rigid.AddForce(Vector2.up * bulletspeed, ForceMode2D.Impulse);
                 break;
             case 2:
                 GameObject bulletR = Instantiate(bullotObjA, transform.position + Vector3.right * 0.1f, transform.rotation);
-                GameObject bulletL = Instantiate(bullotObjA, transform.position+ Vector3.left * 0.1f, transform.rotation);
+                GameObject bulletL = Instantiate(bullotObjA, transform.position + Vector3.left * 0.1f, transform.rotation);
                 Rigidbody2D rigidR = bulletR.GetComponent<Rigidbody2D>();
                 Rigidbody2D rigidL = bulletL.GetComponent<Rigidbody2D>();
                 rigidR.AddForce(Vector2.up * bulletspeed, ForceMode2D.Impulse);
@@ -105,10 +106,10 @@ public class Player : MonoBehaviour
     {
         if (!Input.GetButton("Fire2"))
             return;
-        
+
         if (isBoomTime)
             return;
-       
+
         if (boom == 0)
             return;
 
@@ -129,7 +130,7 @@ public class Player : MonoBehaviour
         {
             Destroy(bullets[index]);
         }
-        
+
     }
     void Reload()
     {
@@ -137,7 +138,7 @@ public class Player : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Border")
+        if (collision.gameObject.tag == "Border")
         {
             switch (collision.gameObject.name)
             {
@@ -154,16 +155,16 @@ public class Player : MonoBehaviour
                     isTouchLeft = true;
                     break;
             }
-               
+
         }
-        else if(collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
+        else if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
         {
             if (isHit)
                 return;
             isHit = true;
             life--;
             manager.UpdateLifeIcon(life);
-            if(life == 0)
+            if (life == 0)
             {
                 manager.gameOver();
             }
@@ -171,11 +172,11 @@ public class Player : MonoBehaviour
             {
                 manager.RespawnPlayer();
             }
-            
+
             gameObject.SetActive(false);
             Destroy(collision.gameObject);
         }
-        else if(collision.gameObject.tag == "Item")
+        else if (collision.gameObject.tag == "Item")
         {
             Item item = collision.gameObject.GetComponent<Item>();
             switch (item.type)
@@ -184,10 +185,10 @@ public class Player : MonoBehaviour
                     score += 1000;
                     break;
 
-                
+
 
                 case "Power":
-                    if(power == maxpower)
+                    if (power == maxpower)
                     {
                         score += 500;
                     }
@@ -196,7 +197,7 @@ public class Player : MonoBehaviour
                         power++;
                     }
                     break;
-               case "Boom":
+                case "Boom":
                     if (boom == maxboom)
                     {
                         score += 500;

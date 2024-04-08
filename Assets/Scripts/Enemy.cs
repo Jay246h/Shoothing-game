@@ -21,12 +21,12 @@ public class Enemy : MonoBehaviour
     public GameObject player;
 
     SpriteRenderer spriteRenderer;
-    
+
 
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        
+
     }
 
     void Update()
@@ -38,17 +38,17 @@ public class Enemy : MonoBehaviour
     {
         if (curShotDelay > maxShotDelay)
             return;
-        if(enemyName == "S")
+        if (enemyName == "S")
         {
             GameObject bullet = Instantiate(bulletObjA, transform.position, transform.rotation);
             Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
             Vector3 dirVec = player.transform.position - transform.position;
             rigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
         }
-        else if(enemyName == "L")
+        else if (enemyName == "L")
         {
-            GameObject bulletR = Instantiate(bulletObjA, transform.position + Vector3.right*0.3f, transform.rotation);
-            GameObject bulletL = Instantiate(bulletObjA, transform.position + Vector3.left*0.3f, transform.rotation);
+            GameObject bulletR = Instantiate(bulletObjA, transform.position + Vector3.right * 0.3f, transform.rotation);
+            GameObject bulletL = Instantiate(bulletObjA, transform.position + Vector3.left * 0.3f, transform.rotation);
 
             Rigidbody2D rigidR = bulletR.GetComponent<Rigidbody2D>();
             Rigidbody2D rigidL = bulletL.GetComponent<Rigidbody2D>();
@@ -76,7 +76,7 @@ public class Enemy : MonoBehaviour
         spriteRenderer.sprite = sprites[1];
         Invoke("ReturnSprite", 0.1f);
 
-        if(health <= 0)
+        if (health <= 0)
         {
             Player playerLogic = player.GetComponent<Player>();
             playerLogic.score += enemyScore;
@@ -93,7 +93,7 @@ public class Enemy : MonoBehaviour
             {
                 Instantiate(itemPower, transform.position, itemPower.transform.rotation);
             }
-            else if(ran < 10)//Boom
+            else if (ran < 10)//Boom
             {
                 Instantiate(itemBoom, transform.position, itemBoom.transform.rotation);
             }
@@ -106,11 +106,11 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "BorderBullet")
+        if (collision.gameObject.tag == "BorderBullet")
         {
             Destroy(gameObject);
         }
-        else if(collision.gameObject.tag == "PlayerBullet")
+        else if (collision.gameObject.tag == "PlayerBullet")
         {
             Bullet bullet = collision.gameObject.GetComponent<Bullet>();
             OnHit(bullet.dmg);

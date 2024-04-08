@@ -28,6 +28,8 @@ public class ObjectManager : MonoBehaviour
     GameObject[] bulletEnemyA;
     GameObject[] bulletEnemyB;
 
+    GameObject[] targetPool;
+
     void Awake()
     {
         enemyL = new GameObject[10];
@@ -49,7 +51,7 @@ public class ObjectManager : MonoBehaviour
     void Generate()
     {
         //Enemy
-        for(int index = 0; index < enemyL.Length; index++)
+        for (int index = 0; index < enemyL.Length; index++)
         {
             enemyL[index] = Instantiate(enemyLPrefab);
             enemyL[index].SetActive(false);
@@ -101,5 +103,51 @@ public class ObjectManager : MonoBehaviour
             bulletEnemyB[index] = Instantiate(bulletEnemyBPrefab);
             bulletEnemyB[index].SetActive(false);
         }
+    }
+    public GameObject MakeObj(string type)
+    {
+       
+        switch (type)
+        {
+            case "EnemyL":
+                targetPool = enemyL;
+                break;
+            case "EnemyM":
+                targetPool = enemyM;
+                break;
+            case "EnemyS":
+                targetPool = enemyS;
+                break;
+            case "ItemCoin":
+                targetPool = itemCoin;
+                break;
+            case "ItemPower":
+                targetPool = itemPower;
+                break;
+            case "ItemBoom":
+                targetPool = itemBoom;
+                break;
+            case "BulletPlayerA":
+                targetPool = bulletPlayerA;
+                break;
+            case "BulletPlayerB":
+                targetPool = bulletPlayerB;
+                break;
+            case "BulletEnemyA":
+                targetPool = bulletEnemyA;
+                break;
+            case "BulletEnemyB":
+                targetPool = bulletEnemyB;
+                break;
+        }
+        for (int index = 0; index < targetPool.Length; index++)
+        {
+            if (!targetPool[index].activeSelf)
+            {
+                targetPool[index].SetActive(true);
+                return targetPool[index];
+            }
+        }
+        return null;
     }
 }
